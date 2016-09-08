@@ -3,14 +3,17 @@
   <head>
     <title><%= full_title(yield(:title)) %></title>
 	<!-- 避免跨站请求伪造 -->
-	<%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+	<%= render 'layouts/rails_default' %>
+	<%= render 'layouts/shim' %>
   </head>
 
   <body>
-	<!-- 访问static_pages/home 时会把home.html.erb中的内容转换成HTML，插入yiled中 -->
-    <%= yield %>
+	<%= render 'layouts/header' %>
+
+	<div class="container">
+	  <!-- 访问static_pages/home 时会把home.html.erb中的内容转换成HTML，插入yiled中 -->
+      <%= yield %>
+	  <%= render 'layouts/footer' %>
+	</div>
   </body>
 </html>
