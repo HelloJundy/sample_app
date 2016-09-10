@@ -1,9 +1,11 @@
+# coding: utf-8
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
 
   def setup
-    @user = User.new(name: "jundy", email: "hellojundy@QQ.COM")
+    @user = User.new(name: "jundy", email: "hellojundy@QQ.COM",
+                     password: "123456", password_confirmation: "123456")
   end
 
   test "should be valid" do
@@ -44,5 +46,29 @@ class UserTest < ActiveSupport::TestCase
       @user.email = address
       assert_not @user.valid?, "#{address.inspect} should be invalid"
     end
+  end
+
+  test "email address should be unique" do
+    # 使用dup方法创建一个一样的用户
+    dup_user = @user.dup
+    dup_user.email = @user.email.upcase
+    @user.save
+    assert_not dup_user.valid?
+  end
+
+  test "email address should save as downcase" do
+    email = @user.email
+    @user.save
+    assert_equal @user.reload.email, email.downcase
+  end
+
+  test "password should be present" do
+    @user.password = @user.password_confirmation = " " * 6
+    assert_not @user.valid?
+  end
+
+  test "password should have a minimun length " do
+    @user.password = @user.password_confirmation = "a" * 5
+    assert_not @user.valid?
   end
 end
