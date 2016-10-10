@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   resources :users
   
-  get '/signup', to: 'user#new'
+  get '/signup', to: 'users#new'
 
   #get 'static_pages/home'
   

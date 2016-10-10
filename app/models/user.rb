@@ -1,4 +1,6 @@
 # coding: utf-8
+
+# coding: utf-8
 class User < ApplicationRecord
   # callback ,在Active Record 对象的生命周期的特定时刻调用
   before_save { email.downcase! }
