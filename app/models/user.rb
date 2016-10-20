@@ -1,6 +1,4 @@
 # coding: utf-8
-
-# coding: utf-8
 class User < ApplicationRecord
   # callback ,在Active Record 对象的生命周期的特定时刻调用
   before_save { email.downcase! }
@@ -13,4 +11,9 @@ class User < ApplicationRecord
 
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }
+
+  def User.digest(string)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
+        BCrypt::Password.create(string, cost: cost)
+  end
 end
