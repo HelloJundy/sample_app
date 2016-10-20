@@ -11,6 +11,10 @@
 	<%= render 'layouts/header' %>
 
 	<div class="container">
+	  <% flash.each do |message_type, message| %>
+	    <%= content_tag(:div, message, class: "alert alert-#{message_type}")%>
+	  <% end %>
+
 	  <!-- 访问static_pages/home 时会把home.html.erb中的内容转换成HTML，插入yiled中 -->
       <%= yield %>
 	  <%= render 'layouts/footer' %>
